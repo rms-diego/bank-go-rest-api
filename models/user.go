@@ -1,10 +1,10 @@
 package models
 
 type User struct {
-	Name      string `json:"name"`
-	LastName  string `json:"lastName"`
-	TaxId     string `json:"taxId"`
-	BirthDate string `json:"birthDate"`
+	Name      string `json:"name" validate:"required"`
+	LastName  string `json:"lastName" validate:"required"`
+	TaxId     string `json:"taxId" validate:"required"`
+	BirthDate string `json:"birthDate" validate:"required"`
 }
 
 func NewUser(name, lastName, taxId, birthDate string) User {
