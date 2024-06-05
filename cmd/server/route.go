@@ -12,6 +12,11 @@ func routes(appRoutes *http.ServeMux) {
 			Message string
 		}
 
+		if r.Method != http.MethodGet {
+			httpResponse.NewJsonResponse(w, http.StatusBadRequest, response{Message: "route not found"})
+			return
+		}
+
 		httpResponse.NewJsonResponse(w, http.StatusOK, response{Message: "Server is running"})
 	})
 
