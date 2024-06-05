@@ -1,9 +1,12 @@
 build:
-	GO111MODULE=on go build -o bin/server ./cmd/server
+	go build -o bin/server ./cmd/server
+
+start:
+	./bin/server
 
 dev:
-	go run ./cmd/server
+	air
 
 clean:
 	go clean
-	rm -f bin/server
+	rm -f bin/server tmp/server
