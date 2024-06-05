@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
+
+	"github.com/rms-diego/bank-go-rest-api/pkg/httpResponse"
 )
 
 func routes(appRoutes *http.ServeMux) {
@@ -12,11 +12,7 @@ func routes(appRoutes *http.ServeMux) {
 			Message string
 		}
 
-		fmt.Println(r.Body)
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(response{Message: "Server is running"})
+		httpResponse.NewJsonResponse(w, http.StatusOK, response{Message: "Server is running"})
 	})
 
 }
