@@ -14,9 +14,21 @@ func main() {
 		panic(err)
 	}
 
-	config := config.GetEnvironmentVariables()
+	cfg := config.GetEnvironmentVariables()
 
-	serverRunningMessage := fmt.Sprintf("Server is running\nLink: http://localhost:%v", 3000)
+	appRoutes := http.NewServeMux()
+	routes(appRoutes)
+
+	server := http.Server{
+		Addr:    cfg.ServerPort,
+		Handler: appRoutes,
+	}
+
+	serverRunningMessage := fmt.Sprintf(
+		"\nServer is running\nLink: http://localhost:%v",
+		cfg.ServerPort,
+	)
 	fmt.Println(serverRunningMessage)
-	http.ListenAndServe(config.ServerPort, nil)
+
+	server.ListenAndServe()
 }
