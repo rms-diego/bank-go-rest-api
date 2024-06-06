@@ -5,13 +5,13 @@ import (
 	"github.com/rms-diego/bank-go-rest-api/pkg/database"
 )
 
-type accountRepository struct{}
+type userRepository struct{}
 
-func newRepository() accountRepository {
-	return accountRepository{}
+func newUserRepository() userRepository {
+	return userRepository{}
 }
 
-func (ctx accountRepository) createUser(user models.User) (models.User, error) {
+func (ctx userRepository) createUser(user models.User) (models.User, error) {
 	var userCreated models.User
 
 	query := `

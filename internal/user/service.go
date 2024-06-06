@@ -11,9 +11,9 @@ import (
 	"github.com/rms-diego/bank-go-rest-api/pkg/validate"
 )
 
-type userService struct{ repo accountRepository }
+type userService struct{ repo userRepository }
 
-func newService(repo accountRepository) userService {
+func newService(repo userRepository) userService {
 	return userService{repo: repo}
 }
 

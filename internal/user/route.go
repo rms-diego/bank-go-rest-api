@@ -3,5 +3,9 @@ package user
 import "net/http"
 
 func Routes(app *http.ServeMux) {
-	app.HandleFunc("/account", createUser)
+	userRepository := newUserRepository()
+	userService := newService(userRepository)
+	userHandler := newUserHandler(userService)
+
+	app.HandleFunc("/user", userHandler.createUserHandler)
 }

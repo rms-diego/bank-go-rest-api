@@ -6,16 +6,23 @@ import (
 	"github.com/rms-diego/bank-go-rest-api/pkg/httpResponse"
 )
 
-func createUser(w http.ResponseWriter, r *http.Request) {
-	repo := newRepository()
-	service := newService(repo)
+type userHandler struct{ service userService }
 
-	userCreated, err := service.createUser(r.Body)
+func newUserHandler(service userService) userHandler {
+	return userHandler{service: service}
+}
+
+func (ctx userHandler) createUserHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		return
+	}
+
+	userCreated, err := ctx.service.createUser(r.Body)
 
 	if err != nil {
 		httpResponse.NewErrorResponse(w, http.StatusBadRequest, err)
 		return
 	}
 
-	httpResponse.NewJsonResponse(w, http.StatusOK, userCreated)
+	httpResponse.NewJsonResponse(w, http.StatusNoContent, userCreated)
 }
