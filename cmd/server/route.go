@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/rms-diego/bank-go-rest-api/internal/auth"
 	"github.com/rms-diego/bank-go-rest-api/internal/user"
 	"github.com/rms-diego/bank-go-rest-api/pkg/httpResponse"
 )
@@ -11,6 +12,7 @@ func routes(appRoutes *http.ServeMux) {
 	appRoutes.HandleFunc("/", healthCheck)
 
 	user.Routes(appRoutes)
+	auth.Routes(appRoutes)
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
@@ -23,3 +25,5 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 
 	httpResponse.NewJsonResponse(w, http.StatusOK, response{Message: "Server is running"})
 }
+
+func routerNotFound() {}
