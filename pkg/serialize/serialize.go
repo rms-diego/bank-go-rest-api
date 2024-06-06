@@ -5,10 +5,10 @@ import (
 	"io"
 )
 
-func BodyToJSON[T interface{}](r io.Reader) (T, error) {
+func BodyToJSON[T interface{}](dataReader io.Reader) (T, error) {
 	var data T
 
-	bytesConvert, err := io.ReadAll(r)
+	bytesConvert, err := io.ReadAll(dataReader)
 	if err != nil {
 		return data, err
 	}
