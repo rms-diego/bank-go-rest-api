@@ -6,6 +6,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/rms-diego/bank-go-rest-api/pkg/config"
+	"github.com/rms-diego/bank-go-rest-api/pkg/database"
 )
 
 func main() {
@@ -16,6 +17,12 @@ func main() {
 
 	cfg := config.GetEnvironmentVariables()
 
+	err = database.Connect(cfg)
+
+	if err != nil {
+		panic(err)
+	}
+
 	appRoutes := http.NewServeMux()
 	routes(appRoutes)
 
@@ -24,7 +31,7 @@ func main() {
 		Handler: appRoutes,
 	}
 
-	fmt.Printf("\nServer is running\nLink: http://localhost%v",
+	fmt.Printf("\nServer is running\nLink: http://localhost%v\n",
 		cfg.ServerPort,
 	)
 
