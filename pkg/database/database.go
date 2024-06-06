@@ -12,12 +12,13 @@ var Db *sql.DB
 func initialize(db *sql.DB) error {
 	createUserTable := `
 		CREATE TABLE IF NOT EXISTS users (
-			id SERIAL PRIMARY KEY,
-			name 				VARCHAR(255) NOT NULL,
-			last_name 	VARCHAR(255) NOT NULL,
-			email 			VARCHAR(255) NOT NULL UNIQUE,
-			tax_id 			VARCHAR(255) NOT NULL UNIQUE,
-			birth_date 	DATE NOT NULL 
+			id 						SERIAL PRIMARY KEY,
+			name 					VARCHAR(255) NOT NULL,
+			last_name 		VARCHAR(255) NOT NULL,
+			email 				VARCHAR(255) NOT NULL UNIQUE,
+			password 			VARCHAR(255) NOT NULL,
+			tax_id 				VARCHAR(255) NOT NULL UNIQUE,
+			birth_date 		DATE NOT NULL 
 		);
 	`
 

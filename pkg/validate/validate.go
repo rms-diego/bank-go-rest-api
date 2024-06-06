@@ -1,8 +1,6 @@
 package validate
 
 import (
-	"fmt"
-
 	"github.com/go-playground/validator/v10"
 )
 
@@ -12,7 +10,7 @@ func ValidatePayload(data interface{}) error {
 	err := validator.Struct(data)
 
 	if err != nil {
-		return fmt.Errorf("is missing fields on payload")
+		return err
 	}
 
 	return nil
