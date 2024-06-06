@@ -9,6 +9,26 @@ import (
 
 var Db *sql.DB
 
+func initialize(db *sql.DB) error {
+	createUserTable := `
+		CREATE TABLE IF NOT EXISTS users (
+			id SERIAL PRIMARY KEY,
+			name 				VARCHAR(255) NOT NULL,
+			last_name 	VARCHAR(255) NOT NULL,
+			tax_id 			VARCHAR(255) NOT NULL UNIQUE,
+			birth_date 	DATE NOT NULL 
+		);
+	`
+
+	_, err := db.Query(createUserTable)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func Connect(config *config.EnvironmentVariables) error {
 	db, err := sql.Open("postgres", config.DatabaseUrl)
 
@@ -20,6 +40,8 @@ func Connect(config *config.EnvironmentVariables) error {
 	if err != nil {
 		return err
 	}
+
+	initialize(db)
 
 	Db = db
 	return nil

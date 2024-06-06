@@ -31,7 +31,7 @@ func main() {
 		Handler: appRoutes,
 	}
 
-	fmt.Printf("\nServer is running\nLink: http://localhost%v\n",
+	fmt.Printf("Server is running\nLink: http://localhost%v\n\n",
 		cfg.ServerPort,
 	)
 
