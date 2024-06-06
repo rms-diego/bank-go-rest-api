@@ -20,7 +20,7 @@ func CreateToken(user models.User) (string, error) {
 			"exp":      time.Now().Add(time.Hour * 24).Unix(),
 		})
 
-	tokenString, err := token.SignedString(env.JwtSecret)
+	tokenString, err := token.SignedString([]byte(env.JwtSecret))
 	if err != nil {
 		return "", err
 	}
