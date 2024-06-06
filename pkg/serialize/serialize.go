@@ -2,13 +2,18 @@ package serialize
 
 import (
 	"encoding/json"
+	"io"
 )
 
-func ToJson[T interface{}](dataBytes []byte) (T, error) {
+func BodyToJSON[T interface{}](r io.Reader) (T, error) {
 	var data T
 
-	err := json.Unmarshal(dataBytes, &data)
+	bytesConvert, err := io.ReadAll(r)
+	if err != nil {
+		return data, err
+	}
 
+	err = json.Unmarshal(bytesConvert, &data)
 	if err != nil {
 		return data, err
 	}
