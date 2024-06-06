@@ -1,17 +1,19 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/rms-diego/bank-go-rest-api/models"
 	"github.com/rms-diego/bank-go-rest-api/pkg/database"
 )
 
-type userRepository struct{}
+type UserRepository struct{}
 
-func newUserRepository() userRepository {
-	return userRepository{}
+func NewUserRepository() UserRepository {
+	return UserRepository{}
 }
 
-func (ctx userRepository) createUser(user models.User) (models.User, error) {
+func (ctx UserRepository) CreateUser(user models.User) (models.User, error) {
 	var userCreated models.User
 
 	query := `
@@ -45,4 +47,34 @@ func (ctx userRepository) createUser(user models.User) (models.User, error) {
 	}
 
 	return userCreated, nil
+}
+
+func (ctx UserRepository) FindByMail(email string) (models.User, error) {
+	var userFound models.User
+
+	query := `
+		SELECT 
+			id, name, last_name AS lastName, email, password, tax_id AS taxId, birth_date AS birthDate
+		FROM 
+			users
+		WHERE email = $1
+	`
+
+	err := database.Db.QueryRow(query, email).
+		Scan(
+			&userFound.Id,
+			&userFound.Name,
+			&userFound.LastName,
+			&userFound.Email,
+			&userFound.Password,
+			&userFound.TaxId,
+			&userFound.BirthDate,
+		)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		return models.User{}, fmt.Errorf("user not found")
+	}
+
+	return userFound, nil
 }

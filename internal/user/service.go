@@ -11,9 +11,9 @@ import (
 	"github.com/rms-diego/bank-go-rest-api/pkg/validate"
 )
 
-type userService struct{ repo userRepository }
+type userService struct{ repo UserRepository }
 
-func newService(repo userRepository) userService {
+func newService(repo UserRepository) userService {
 	return userService{repo: repo}
 }
 
@@ -34,7 +34,7 @@ func (ctx userService) createUser(dataReader io.ReadCloser) (models.User, error)
 	}
 
 	userPayload.Password = hash
-	userCreated, err := ctx.repo.createUser(userPayload)
+	userCreated, err := ctx.repo.CreateUser(userPayload)
 
 	switch {
 	case err != nil && strings.Contains(err.Error(), "violates unique"):

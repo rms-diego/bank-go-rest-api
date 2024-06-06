@@ -3,7 +3,7 @@ package user
 import "net/http"
 
 func Routes(app *http.ServeMux) {
-	userRepository := newUserRepository()
+	userRepository := NewUserRepository()
 	userService := newService(userRepository)
 	userHandler := newUserHandler(userService)
 
