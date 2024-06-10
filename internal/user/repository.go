@@ -13,7 +13,7 @@ func NewUserRepository() UserRepository {
 	return UserRepository{}
 }
 
-func (ctx UserRepository) CreateUser(user models.User) (models.User, error) {
+func (u UserRepository) CreateUser(user models.User) (models.User, error) {
 	var userCreated models.User
 
 	query := `
@@ -49,7 +49,7 @@ func (ctx UserRepository) CreateUser(user models.User) (models.User, error) {
 	return userCreated, nil
 }
 
-func (ctx UserRepository) FindByMail(email string) (models.User, error) {
+func (u UserRepository) FindByMail(email string) (models.User, error) {
 	var userFound models.User
 
 	query := `
