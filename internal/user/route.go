@@ -8,4 +8,5 @@ func Routes(app *http.ServeMux) {
 	userHandler := newUserHandler(userService)
 
 	app.HandleFunc("/user", userHandler.createUserHandler)
+	app.HandleFunc("/user/", userHandler.findById)
 }

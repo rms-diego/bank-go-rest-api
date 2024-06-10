@@ -1,7 +1,9 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/rms-diego/bank-go-rest-api/internal/utils/httpResponse"
 )
@@ -13,7 +15,9 @@ func newUserHandler(service userService) userHandler {
 }
 
 func (u userHandler) createUserHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	id := strings.TrimPrefix(r.URL.Path, "/user")
+
+	if r.Method != http.MethodPost && id == "" {
 		return
 	}
 
@@ -24,4 +28,21 @@ func (u userHandler) createUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	httpResponse.NewJsonResponse(w, http.StatusNoContent, userCreated)
+}
+
+func (u userHandler) findById(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		httpResponse.NewErrorResponse(w, http.StatusNotImplemented, fmt.Errorf("not implemented"))
+		return
+	}
+
+	id := strings.TrimPrefix(r.URL.Path, "/user/")
+	userFound, err := u.service.findById(id)
+	if err != nil {
+		httpResponse.NewErrorResponse(w, http.StatusBadRequest, err)
+		return
+	}
+
+	httpResponse.NewJsonResponse(w, 200, userFound)
 }

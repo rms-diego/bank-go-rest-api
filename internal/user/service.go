@@ -47,3 +47,17 @@ func (u userService) createUser(dataReader io.ReadCloser) (models.User, error) {
 		return userCreated, nil
 	}
 }
+
+func (u userService) findById(id string) (models.User, error) {
+
+	if id == "" {
+		return models.User{}, fmt.Errorf("missing user id")
+	}
+	userFound, err := u.repo.findById(id)
+
+	if err != nil {
+		return models.User{}, err
+	}
+
+	return userFound, nil
+}

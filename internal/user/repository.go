@@ -78,3 +78,32 @@ func (u UserRepository) FindByMail(email string) (models.User, error) {
 
 	return userFound, nil
 }
+
+func (u UserRepository) findById(id string) (models.User, error) {
+	var userFound models.User
+
+	query := `
+		SELECT 
+			id, name, last_name AS lastName, email, password, tax_id AS taxId, birth_date AS birthDate
+		FROM 
+			users
+		WHERE id = $1
+	`
+
+	err := database.Db.QueryRow(query, id).
+		Scan(
+			&userFound.Id,
+			&userFound.Name,
+			&userFound.LastName,
+			&userFound.Email,
+			&userFound.Password,
+			&userFound.TaxId,
+			&userFound.BirthDate,
+		)
+
+	if err != nil {
+		return models.User{}, fmt.Errorf("user not found")
+	}
+
+	return userFound, nil
+}
