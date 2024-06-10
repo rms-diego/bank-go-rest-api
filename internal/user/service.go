@@ -5,10 +5,10 @@ import (
 	"io"
 	"strings"
 
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/jwt"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/serialize"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/validate"
 	"github.com/rms-diego/bank-go-rest-api/models"
-	pkg "github.com/rms-diego/bank-go-rest-api/pkg/hash"
-	"github.com/rms-diego/bank-go-rest-api/pkg/serialize"
-	"github.com/rms-diego/bank-go-rest-api/pkg/validate"
 )
 
 type userService struct{ repo UserRepository }
@@ -17,7 +17,7 @@ func newService(repo UserRepository) userService {
 	return userService{repo: repo}
 }
 
-func (ctx userService) createUser(dataReader io.ReadCloser) (models.User, error) {
+func (u userService) createUser(dataReader io.ReadCloser) (models.User, error) {
 	userPayload, err := serialize.BodyToJSON[models.User](dataReader)
 	if err != nil {
 		return models.User{}, err
@@ -28,13 +28,13 @@ func (ctx userService) createUser(dataReader io.ReadCloser) (models.User, error)
 		return models.User{}, err
 	}
 
-	hash, err := pkg.HashPassword(userPayload.Password)
+	hash, err := jwt.CreateToken(userPayload)
 	if err != nil {
 		return models.User{}, err
 	}
 
 	userPayload.Password = hash
-	userCreated, err := ctx.repo.CreateUser(userPayload)
+	userCreated, err := u.repo.CreateUser(userPayload)
 
 	switch {
 	case err != nil && strings.Contains(err.Error(), "violates unique"):

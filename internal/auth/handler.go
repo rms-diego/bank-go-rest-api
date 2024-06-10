@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/rms-diego/bank-go-rest-api/pkg/httpResponse"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/httpResponse"
 )
 
 type authHandler struct {
@@ -15,13 +15,13 @@ func newAuthHandler(service authService) authHandler {
 	return authHandler{authService: service}
 }
 
-func (ctx authHandler) loginHandler(w http.ResponseWriter, r *http.Request) {
+func (u authHandler) loginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		httpResponse.NewErrorResponse(w, http.StatusNotImplemented, fmt.Errorf("route not found"))
 		return
 	}
 
-	token, err := ctx.authService.loginService(r.Body)
+	token, err := u.authService.loginService(r.Body)
 
 	if err != nil {
 		httpResponse.NewErrorResponse(w, http.StatusBadRequest, err)

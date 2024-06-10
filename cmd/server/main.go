@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/joho/godotenv"
-	"github.com/rms-diego/bank-go-rest-api/pkg/config"
-	"github.com/rms-diego/bank-go-rest-api/pkg/database"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/config"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/database"
 )
 
 func main() {

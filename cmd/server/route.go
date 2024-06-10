@@ -5,7 +5,7 @@ import (
 
 	"github.com/rms-diego/bank-go-rest-api/internal/auth"
 	"github.com/rms-diego/bank-go-rest-api/internal/user"
-	"github.com/rms-diego/bank-go-rest-api/pkg/httpResponse"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/httpResponse"
 )
 
 func routes(appRoutes *http.ServeMux) {
@@ -19,11 +19,9 @@ func healthCheck(w http.ResponseWriter, r *http.Request) {
 	type response struct{ Message string }
 
 	if r.Method != http.MethodGet {
-		httpResponse.NewJsonResponse(w, http.StatusBadRequest, response{Message: "route not found"})
+		httpResponse.NewJsonResponse(w, http.StatusNotImplemented, response{Message: "not implemented"})
 		return
 	}
 
 	httpResponse.NewJsonResponse(w, http.StatusOK, response{Message: "Server is running"})
 }
-
-func routerNotFound() {}

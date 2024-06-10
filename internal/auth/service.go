@@ -5,9 +5,9 @@ import (
 	"io"
 
 	"github.com/rms-diego/bank-go-rest-api/internal/user"
-	pkg "github.com/rms-diego/bank-go-rest-api/pkg/hash"
-	"github.com/rms-diego/bank-go-rest-api/pkg/jwt"
-	"github.com/rms-diego/bank-go-rest-api/pkg/serialize"
+	pkg "github.com/rms-diego/bank-go-rest-api/internal/utils/hash"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/jwt"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/serialize"
 )
 
 type authPayload struct {
@@ -21,14 +21,14 @@ func newAuthService(repo user.UserRepository) authService {
 	return authService{repo: repo}
 }
 
-func (ctx authService) loginService(dataReader io.ReadCloser) (string, error) {
+func (u authService) loginService(dataReader io.ReadCloser) (string, error) {
 
 	authPayload, err := serialize.BodyToJSON[authPayload](dataReader)
 	if err != nil {
 		return "", err
 	}
 
-	userFound, nil := ctx.repo.FindByMail(authPayload.Email)
+	userFound, nil := u.repo.FindByMail(authPayload.Email)
 
 	if err != nil {
 		return "", err

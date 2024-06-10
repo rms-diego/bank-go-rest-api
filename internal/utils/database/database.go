@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	_ "github.com/lib/pq"
-	"github.com/rms-diego/bank-go-rest-api/pkg/config"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/config"
 )
 
 var Db *sql.DB

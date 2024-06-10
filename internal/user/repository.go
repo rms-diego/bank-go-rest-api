@@ -3,8 +3,8 @@ package user
 import (
 	"fmt"
 
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/database"
 	"github.com/rms-diego/bank-go-rest-api/models"
-	"github.com/rms-diego/bank-go-rest-api/pkg/database"
 )
 
 type UserRepository struct{}

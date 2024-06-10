@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/config"
 	"github.com/rms-diego/bank-go-rest-api/models"
-	"github.com/rms-diego/bank-go-rest-api/pkg/config"
 )
 
 func CreateToken(user models.User) (string, error) {
