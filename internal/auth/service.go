@@ -5,7 +5,7 @@ import (
 	"io"
 
 	"github.com/rms-diego/bank-go-rest-api/internal/user"
-	pkg "github.com/rms-diego/bank-go-rest-api/internal/utils/hash"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/bcrypt"
 	"github.com/rms-diego/bank-go-rest-api/internal/utils/jwt"
 	"github.com/rms-diego/bank-go-rest-api/internal/utils/serialize"
 )
@@ -34,7 +34,7 @@ func (u authService) loginService(dataReader io.ReadCloser) (string, error) {
 		return "", err
 	}
 
-	if err := pkg.CheckPasswordHash(authPayload.Password, userFound.Password); err != nil {
+	if err := bcrypt.CheckPasswordHash(authPayload.Password, userFound.Password); err != nil {
 		return "", fmt.Errorf("wrong credentials")
 	}
 

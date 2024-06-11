@@ -5,7 +5,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/rms-diego/bank-go-rest-api/internal/utils/jwt"
+	"github.com/rms-diego/bank-go-rest-api/internal/utils/bcrypt"
 	"github.com/rms-diego/bank-go-rest-api/internal/utils/serialize"
 	"github.com/rms-diego/bank-go-rest-api/internal/utils/validate"
 	"github.com/rms-diego/bank-go-rest-api/models"
@@ -28,12 +28,11 @@ func (u userService) createUser(dataReader io.ReadCloser) (models.User, error) {
 		return models.User{}, err
 	}
 
-	hash, err := jwt.CreateToken(userPayload)
+	userPayload.Password, err = bcrypt.HashPassword(userPayload.Password)
 	if err != nil {
 		return models.User{}, err
 	}
 
-	userPayload.Password = hash
 	userCreated, err := u.repo.CreateUser(userPayload)
 
 	switch {

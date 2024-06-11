@@ -9,4 +9,4 @@ dev:
 
 clean:
 	go clean
-	rm -f bin/server tmp/server
+	rm -f bin/server tmp/server tmp/build-errors.log
