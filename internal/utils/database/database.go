@@ -43,7 +43,11 @@ func Connect(config *config.EnvironmentVariables) error {
 		return err
 	}
 
-	initialize(db)
+	err = initialize(db)
+
+	if err != nil {
+		return err
+	}
 
 	Db = db
 	return nil
